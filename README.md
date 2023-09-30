@@ -1,8 +1,8 @@
-###Project Name: Educational LLM Chat Integration
-##Overview
+### Project Name: Educational LLM Chat Integration
+## Overview
 The Educational LLM Chat Integration is an innovative solution meticulously engineered to elevate the educational experience within your Learning Management System (LLM). This seamlessly integrated chat feature serves as a multifaceted tool, empowering students, educators, and administrators to engage, communicate, collaborate, and research within a cohesive and secure virtual learning ecosystem.
 
-##Purpose
+## Purpose
 **Empowering Learning**: The core mission of this integration is to empower the educational process through a range of key objectives:
 
 **Interactive Learning**: Foster an environment conducive to active learning by enabling real-time discussions among students. Encourage knowledge sharing, critical thinking, and collaborative problem-solving.
@@ -39,7 +39,7 @@ Installation: Clone the repository and install the necessary dependencies as out
 **Support and Training**: Offer ongoing support, training, and resources to ensure all users can utilize the chat feature effectively.
 
 **Support**
-For all inquiries, concerns, or valuable feedback related to this integration, our dedicated support team is readily available to assist you. Please feel free to reach out to us at support@yourwebsite.com.
+For all inquiries, concerns, or valuable feedback related to this integration, our dedicated support team is readily available to assist you. Please feel free to reach out to me.
 
 **License**
 This integration is proprietary software and is not open-source. Unauthorized distribution or use is prohibited.
