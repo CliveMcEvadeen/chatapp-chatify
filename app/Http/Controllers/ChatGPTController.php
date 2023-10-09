@@ -17,27 +17,35 @@ class ChatGPTController extends Controller
         $client = new Client(['verify' => false,]);
 
         try {
-            $response = $client->post('https://api.openai.com/v1/completions', [
+            $response = $client->post('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyC-3NtdSDGwZYwtFwBmNFQw3mz8V_K8rcI', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+                    // 'Authorization' => 'Bearer ' . env('GOOGLE_API_KEY'),
                 ],
                 'json' => [
-                    'model' => 'davinci',
-                    'prompt' => $request->input('message'),
-                    'temperature' => 0.7,
-                    'max_tokens' => 60,
-                    'top_p' => 1,
-                    'n' => 1,
-                    'stop' => ['\n'],
-                    'frequency_penalty' => 0.25,
-                    'presence_penalty' => 0.5,
-                    'best_of' => 1
+                    // 'model' => 'davinci',
+                    'prompt' =>array('text'=>'what is the tallest building in the whole world'),
+                    "temperature"=>0.7, 
+                    "candidate_count"=>1, 
+                    "maxOutputTokens"=>200, 
+                    "topP"=>0.8, 
+                    "topK"=>10
+
+                    // @gpt params
+                    
+                    // 'max_tokens' => 60,
+                    // 'top_p' => 1,
+                    // 'n' => 1,
+                    // 'stop' => ['\n'],
+                    // 'frequency_penalty' => 0.25,
+                    // 'presence_penalty' => 0.5,
+                    // 'best_of' => 1
                 ],
             ]);
 
             $result = json_decode($response->getBody()->getContents(), true);
-            return response()->json($result['choices'][0]['text']);
+            return $result;
+            // response()->json($result['choices'][0]['text']);
         } catch (RequestException $e) {
             // Handle any request exception here
             return response()->json(['error' => $e->getMessage()], 500);
