@@ -14,17 +14,20 @@ class ChatGPTController extends Controller
     public function chat(Request $request)
     {
         // Disable SSL certificate verification
+        $apiURL='localhost:8000/processdata';
         $client = new Client(['verify' => false,]);
 
         try {
-            $response = $client->post('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyC-3NtdSDGwZYwtFwBmNFQw3mz8V_K8rcI', [
+            $response = $client->post('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyAk-RAxYiVrqjb4dZAI_CrSxfmBX1Q0qRE', [
                 'headers' => [
                     'Content-Type' => 'application/json',
                     // 'Authorization' => 'Bearer ' . env('GOOGLE_API_KEY'),
                 ],
                 'json' => [
-                    // 'model' => 'davinci',
-                    'prompt' =>array('text'=>'what is the tallest building in the whole world'),
+
+                    // @PALM params
+                    
+                    'prompt' =>array('text'=>'explain different parts of a computer'),
                     "temperature"=>0.7, 
                     "candidate_count"=>1, 
                     "maxOutputTokens"=>200, 
@@ -32,7 +35,8 @@ class ChatGPTController extends Controller
                     "topK"=>10
 
                     // @gpt params
-                    
+
+                    // 'model' => 'davinci',
                     // 'max_tokens' => 60,
                     // 'top_p' => 1,
                     // 'n' => 1,
@@ -43,12 +47,16 @@ class ChatGPTController extends Controller
                 ],
             ]);
 
-            $result = json_decode($response->getBody()->getContents(), true);
-            return $result;
-            // response()->json($result['choices'][0]['text']);
+            $result = json_decode($response->getBody()->getContents(),true);
+            // $api_request = $client->post($apiURL, ['json' => ['data' => $result]]);
+            // $responce = json_decode($api_request->getBody()->getContents(),true);
+            // return $response;
+            return $result['candidates'][0]['output'];
+            
         } catch (RequestException $e) {
             // Handle any request exception here
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
 }
+

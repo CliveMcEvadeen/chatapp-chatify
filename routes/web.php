@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ChatGPTController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,8 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-// registering the chat route
-
 Route::get('/chat', [App\Http\Controllers\ChatGPTController::class, 'chat']);
-// Route::post('/chat', [App\Http\Controllers\ChatGPTController::class, 'askToChatGpt']);
+Route::post('/chat', [App\Http\Controllers\ChatGPTController::class, 'chat']);
+
 require __DIR__.'/auth.php';
