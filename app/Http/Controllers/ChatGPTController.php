@@ -18,11 +18,13 @@ class ChatGPTController extends Controller
         $client = new Client(['verify' => false,]);
 
         try {
-            $response = $client->post('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText?key=AIzaSyAk-RAxYiVrqjb4dZAI_CrSxfmBX1Q0qRE', [
+            $response = $client->post('https://generativelanguage.googleapis.com/v1beta2/models/text-bison-001:generateText', [
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    // 'Authorization' => 'Bearer ' . env('GOOGLE_API_KEY'),
                 ],
+                    'query'=>[
+                        "key"=>env('GOOGLE_API_KEY'),
+                    ],
                 'json' => [
 
                     // @PALM params
@@ -30,28 +32,20 @@ class ChatGPTController extends Controller
                     'prompt' =>array('text'=>'explain different parts of a computer'),
                     "temperature"=>0.7, 
                     "candidate_count"=>1, 
-                    "maxOutputTokens"=>200, 
+                    "maxOutputTokens"=>600, 
                     "topP"=>0.8, 
                     "topK"=>10
 
-                    // @gpt params
-
-                    // 'model' => 'davinci',
-                    // 'max_tokens' => 60,
-                    // 'top_p' => 1,
-                    // 'n' => 1,
-                    // 'stop' => ['\n'],
-                    // 'frequency_penalty' => 0.25,
-                    // 'presence_penalty' => 0.5,
-                    // 'best_of' => 1
                 ],
             ]);
 
             $result = json_decode($response->getBody()->getContents(),true);
-            // $api_request = $client->post($apiURL, ['json' => ['data' => $result]]);
-            // $responce = json_decode($api_request->getBody()->getContents(),true);
-            // return $response;
-            return $result['candidates'][0]['output'];
+           
+            $response=explode(".", $result['candidates'][0]['output']);
+            foreach($response as $statement){
+                $LLM_response=trim($statement). ".\n";
+                echo $LLM_response;
+            }
             
         } catch (RequestException $e) {
             // Handle any request exception here
