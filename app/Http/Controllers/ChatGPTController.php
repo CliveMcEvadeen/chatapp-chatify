@@ -6,15 +6,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
-use Illuminate\http\jsonResponse;
+use Illuminate\http\JsonResponse;
 use GuzzleHttp\Exception\RequestException; // Import RequestException for handling exceptions
 
 class ChatGPTController extends Controller
 {
-    public function chat(Request $request)
+    public $LLM_response;
+    public function makeRequest()
     {
         // Disable SSL certificate verification
-        $apiURL='localhost:8000/processdata';
+       
         $client = new Client(['verify' => false,]);
 
         try {
@@ -42,15 +43,40 @@ class ChatGPTController extends Controller
             $result = json_decode($response->getBody()->getContents(),true);
            
             $response=explode(".", $result['candidates'][0]['output']);
+            $this->LLM_response="";
             foreach($response as $statement){
-                $LLM_response=trim($statement). ".\n";
-                echo $LLM_response;
+                $this->LLM_response.=trim($statement). ".\n";
+                // echo $this->$LLM_response;
             }
-            
+            return $this->LLM_response;
+
         } catch (RequestException $e) {
             // Handle any request exception here
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-}
 
+    public function getResponse(Request $request)
+    {
+        //call the chat function;
+        $this->makeRequest();
+        return $this->LLM_response;
+        // return 'hello there';
+    }
+
+    public function sendToAPI(){
+        $apiURL=env('FLASK_URL');
+
+        $this->makeRequest();
+        $data=['text'=>'hello there'];
+        try{
+            $response = Http::post($apiURL, $data);
+            $responseBody = $response->json();
+            return response()->json($responseBody);
+            
+        }catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+
+    }
+}
