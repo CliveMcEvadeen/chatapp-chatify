@@ -63,17 +63,26 @@ class ChatGPTController extends Controller
         return $this->LLM_response;
         // return 'hello there';
     }
+    public function view_renderer(){
+        //making the response available to the view
+        $this->makeRequest();
+        return view('chat', ['LLM_Messages' => $this->LLM_response]);
+    }
 
-    public function sendToAPI(){
-        $apiURL=env('FLASK_URL');
+    public function sendToAPI(){ 
+        
+        // $apiURL=env('FLASK_URL');
+
+        $apiURL = 'http://localhost:8000/sendToAPI';
 
         $this->makeRequest();
-        $data=['text'=>'hello there'];
+        
         try{
+            $data=['text'=>'hello there'];
             $response = Http::post($apiURL, $data);
             $responseBody = $response->json();
             return response()->json($responseBody);
-            
+
         }catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }

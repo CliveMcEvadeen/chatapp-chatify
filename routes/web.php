@@ -30,5 +30,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/chat', [App\Http\Controllers\ChatGPTController::class, 'chat']);
 Route::post('/processdata', [App\Http\Controllers\ChatGPTController::class, 'chat']);
 Route::get('/getResponse', [App\Http\Controllers\ChatGPTController::class, 'getResponse']);
+Route::post('/sendToAPI', [App\Http\Controllers\ChatGPTController::class, 'sendToAPI']);
 
 require __DIR__.'/auth.php';

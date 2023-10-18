@@ -6,7 +6,7 @@ return [
     | Messenger display name
     |-------------------------------------
     */
-    'name' => env('CHATIFY_NAME', 'Chatify Messenger'),
+    'name' => env('CHATIFY_NAME', 'Agrolern Messenger'),
 
     /*
     |-------------------------------------
@@ -105,6 +105,11 @@ return [
         '#FF9800',
         '#ff2522',
         '#9C27B0',
+        '#C0C0C0',
+        '#DE3163',
+        '#00FF00',
+        '#FFD700',
+        'E5B80B',
     ],
     /*
     |-------------------------------------
