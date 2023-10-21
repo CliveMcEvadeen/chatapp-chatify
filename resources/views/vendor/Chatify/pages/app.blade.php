@@ -62,9 +62,11 @@
                 </div>
                 {{-- header buttons --}}
                 <nav class="m-header-right">
+                    <a href="#" class=""><i class="	fas fa-comments"></i></a>
                     <a href="#" class="add-to-favorite"><i class="fas fa-star"></i></a>
                     <a href="/"><i class="fas fa-home"></i></a>
                     <a href="#" class="show-infoSide"><i class="fas fa-info-circle"></i></a>
+
                 </nav>
             </nav>
             {{-- Internet connection --}}

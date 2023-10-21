@@ -27,9 +27,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/chat', [App\Http\Controllers\ChatGPTController::class, 'chat']);
-Route::post('/processdata', [App\Http\Controllers\ChatGPTController::class, 'chat']);
-Route::get('/getResponse', [App\Http\Controllers\ChatGPTController::class, 'getResponse']);
-Route::post('/sendToAPI', [App\Http\Controllers\ChatGPTController::class, 'sendToAPI']);
 
 require __DIR__.'/auth.php';
